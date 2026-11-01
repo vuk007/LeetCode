@@ -204,12 +204,31 @@ public:
         }
         return res;
     }
+    int maxArea(vector<int>& height) {
+        int left = 0 ,right=height.size() - 1;
+        int res = 0 ;
+        int volume , distance = right;
+        while ( left < right ) {
+            volume = min(height[left] , height[right]) * distance;
+            res = res < volume ? volume : res;
+            distance--;
+            if(height[left] < height[right]) {
+                left++;
+            }else {
+                right--;
+            }
+        }
+        return res;
+    }
 };
 void printList(ListNode* head);
 
 int main()
 {
-    cout<<(new Solution)->calculate2("4/3 + 2");
+
+    vector<int> height {1,1};
+
+    cout<<(new Solution)->maxArea(height);
     return 0;
 }
 
