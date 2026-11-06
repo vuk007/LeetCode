@@ -345,7 +345,7 @@ public:
         return true;
     }
 
-    void QueenBacktrack(vector<vector<string>>&res , vector<string> curr , int lvl) {
+    void QueenBacktrack(vector<vector<string>>&res , vector<string>& curr , int lvl) {
 
         if(lvl == curr.size()) {
             res.push_back(curr);
@@ -362,7 +362,8 @@ public:
     vector<vector<string>> solveNQueens(int n) {
 
         vector<vector<string>>res {};
-        QueenBacktrack(res , vector<string>(n, string(n, '.')) , 0);
+        vector<string> curr (n, string(n, '.'));
+        QueenBacktrack(res , curr , 0);
         return res;
 
     }
