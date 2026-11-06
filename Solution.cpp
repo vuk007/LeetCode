@@ -7,6 +7,7 @@
 #include <vector>
 #include <stack>
 #include <algorithm>
+#include <unordered_map>
 using namespace std;
 struct ListNode {
     int val;
@@ -301,5 +302,68 @@ public:
         return res;
     }
 
+    unordered_map<int , string> letters{
+                {2,"abc"} , {3,"def"},
+                {4,"ghi"} , {5,"jkl"},
+                {6,"mno"},{7,"pqrs"},
+                {8,"tuv"} , {9,"wxyz"}
+    };
 
+    void combination(vector<string>& res , string number , string curr ) {
+        if(number.size() == 0) {
+            res.push_back(curr);
+            return;
+        }
+        int digit = number.front() - '0';
+        number.erase(0,1);
+        for( int i = 0 ; i < letters[digit].size() ; i++ ) {
+            combination(res , number , curr + letters[digit][i]);
+        }
+    }
+
+    vector<string> letterCombinations(string digits) {
+
+        int digit;
+        vector<string> res ;
+        combination(res , digits, "");
+        return res;
+
+    }
+
+    bool check_queen_pos(vector<string>&curr , int &lvl , int &position )//true if possible to place queen based on previous rows
+    {
+        for ( int i = 0 ; i < lvl ; i++ ) {
+            // provera da li je u nekom redu odmah iznad kraljica
+            if(curr[i][position] == 'Q')return false;
+
+            // provera dijagonalno levo gore i desno gore
+            if(position - lvl + i >= 0 && curr [i][position - lvl + i] == 'Q')return false;
+
+            //desno
+            if(lvl + position - i >= 0 && curr[i][lvl + position - i] == 'Q') return false;
+        }
+        return true;
+    }
+
+    void QueenBacktrack(vector<vector<string>>&res , vector<string> curr , int lvl) {
+
+        if(lvl == curr.size()) {
+            res.push_back(curr);
+            return;
+        }
+        for(int i = 0 ; i < curr.size() ; i++) {
+            if(check_queen_pos(curr , lvl , i)) {
+                curr[lvl][i] = 'Q';
+                QueenBacktrack(res,curr,lvl+1);
+                curr[lvl][i] = '.';
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+
+        vector<vector<string>>res {};
+        QueenBacktrack(res , vector<string>(n, string(n, '.')) , 0);
+        return res;
+
+    }
 };

@@ -2,18 +2,17 @@
 
 void printList(ListNode* head);
 
-int main()
-{
-
-    vector<int> nums {2,2,1,1};
-
-    auto matrix = (new Solution)->permuteUnique(nums);
-    for (int i = 0; i < matrix.size(); i++) {
-        for (int j = 0; j < matrix[i].size(); j++) {
-            cout << matrix[i][j] << " ";
+void printVector(vector<vector<string>> vec) {
+    for (const auto& row : vec) {
+        for (const auto& str : row) {
+            cout << str << " \n";
         }
-        cout << endl;
+        cout << "==================\n";
     }
+}
+
+int main() {
+    printVector((new Solution)->solveNQueens(5));
     return 0;
 }
 
