@@ -12,7 +12,7 @@ void printVector(vector<vector<string>> vec) {
 }
 
 int main() {
-    printVector((new Solution)->solveNQueens(5));
+    ac
     return 0;
 }
 
